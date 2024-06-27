@@ -19,11 +19,15 @@ public interface JpaConst {
     String EMP_COL_CODE = "code"; //社員番号
     String EMP_COL_NAME = "name"; //氏名
     String EMP_COL_PASS = "password"; //パスワード
-    String EMP_COL_ADMIN_FLAG = "admin_flag"; //管理者権限
+//    String EMP_COL_MANAGER = "manager_flag"; //管理者権限、部長
+//    String EMP_COL_SECTION_CHIEF = "section_chief_flag"; //管理者権限、課長
+    String EMP_COL_ADMIN_FLAG = "admin_flag"; //管理者権限、管理者
     String EMP_COL_CREATED_AT = "created_at"; //登録日時
     String EMP_COL_UPDATED_AT = "updated_at"; //更新日時
     String EMP_COL_DELETE_FLAG = "delete_flag"; //削除フラグ
 
+    int ROLE_MANAGER = 3; //管理者権限ON(部長)
+    int ROLE_SECTION_CHIEF = 2; //管理者権限ON(課長)
     int ROLE_ADMIN = 1; //管理者権限ON(管理者)
     int ROLE_GENERAL = 0; //管理者権限OFF(一般)
     int EMP_DEL_TRUE = 1; //削除フラグON(削除済み)
