@@ -27,17 +27,38 @@ public class EmployeeConverter {
                 ev.getPassword(),
                 ev.getAdminFlag() == null
                         ? null
-                        : ev.getAdminFlag() == AttributeConst.ROLE_ADMIN.getIntegerValue()
-                                ? JpaConst.ROLE_ADMIN
-                                : JpaConst.ROLE_GENERAL,
+                                : attribuToJpaAdminFlag(ev.getAdminFlag()), // ここメソッドに置き換え
                 ev.getCreatedAt(),
                 ev.getUpdatedAt(),
                 ev.getDeleteFlag() == null
-                        ? null
-                        : ev.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()
-                                ? JpaConst.EMP_DEL_TRUE
-                                : JpaConst.EMP_DEL_FALSE);
+                ? null
+                        : ev.getDeleteFlag() == JpaConst.EMP_DEL_TRUE
+                                ? AttributeConst.DEL_FLAG_TRUE.getIntegerValue()
+                                : AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
     }
+
+    /**
+     * AttributeConstに定義されている管理権限をJpaConstに定義されているものに変換
+     * @param auth AttributeConstの権限
+     * @return JpaConstの権限
+     */
+    public static int attribuToJpaAdminFlag(int auth) {
+
+        if(auth == AttributeConst.ROLE_MANAGER.getIntegerValue()) {
+            return JpaConst.ROLE_MANAGER;
+
+        } else if (auth == AttributeConst.ROLE_SECTION_CHIEF.getIntegerValue()){
+            return JpaConst.ROLE_SECTION_CHIEF;
+
+        }else if (auth == AttributeConst.ROLE_ADMIN.getIntegerValue()){
+            return JpaConst.ROLE_ADMIN;
+
+        }else {
+            return JpaConst.ROLE_GENERAL;
+
+        }
+    }
+
 
     /**
      * DTOモデルのインスタンスからViewモデルのインスタンスを作成する
@@ -45,10 +66,10 @@ public class EmployeeConverter {
      * @return EmployeeViewのインスタンス
      */
     public static EmployeeView toView(Employee e) {
-
         if(e == null) {
             return null;
         }
+
 
         return new EmployeeView(
                 e.getId(),
@@ -57,9 +78,7 @@ public class EmployeeConverter {
                 e.getPassword(),
                 e.getAdminFlag() == null
                         ? null
-                        : e.getAdminFlag() == JpaConst.ROLE_ADMIN
-                                ? AttributeConst.ROLE_ADMIN.getIntegerValue()
-                                : AttributeConst.ROLE_GENERAL.getIntegerValue(),
+                                : jpaToAttribuAdminFlag(e.getAdminFlag()),
                 e.getCreatedAt(),
                 e.getUpdatedAt(),
                 e.getDeleteFlag() == null
@@ -68,7 +87,22 @@ public class EmployeeConverter {
                                 ? AttributeConst.DEL_FLAG_TRUE.getIntegerValue()
                                 : AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
     }
+    public static int  jpaToAttribuAdminFlag(int auth) {
 
+        if(auth == JpaConst.ROLE_MANAGER) {
+            return AttributeConst.ROLE_MANAGER.getIntegerValue();
+
+        } else if (auth == JpaConst.ROLE_SECTION_CHIEF){
+            return AttributeConst.ROLE_SECTION_CHIEF.getIntegerValue();
+
+        }else if (auth == JpaConst.ROLE_ADMIN){
+            return AttributeConst.ROLE_ADMIN.getIntegerValue();
+
+        }else {
+            return AttributeConst.ROLE_GENERAL.getIntegerValue();
+
+        }
+    }
     /**
      * DTOモデルのリストからViewモデルのリストを作成する
      * @param list DTOモデルのリスト
@@ -83,6 +117,7 @@ public class EmployeeConverter {
 
         return evs;
     }
+
 
     /**
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
