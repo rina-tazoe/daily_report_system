@@ -180,6 +180,7 @@ public class ReportAction extends ActionBase {
             //該当の日報データが存在しない、または
             //ログインしている従業員が日報の作成者でない場合、または
             //部長でない場合は、エラー画面を表示
+
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
