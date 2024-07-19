@@ -12,12 +12,15 @@ public enum ForwardConst {
     ACT_EMP("Employee"),
     ACT_REP("Report"),
     ACT_AUTH("Auth"),
+    ACT_FOL("Follow"),
 
     //command
     CMD("command"),
     CMD_NONE(""),
     CMD_INDEX("index"),
     CMD_SHOW("show"),
+    CMD_FOLLOW("follow"),
+    CMD_FOLLOW_LIST("followList"),
     CMD_SHOW_LOGIN("showLogin"),
     CMD_LOGIN("login"),
     CMD_LOGOUT("logout"),

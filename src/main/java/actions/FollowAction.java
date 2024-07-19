@@ -21,7 +21,7 @@ import services.ReportService;
  * 日報に関する処理を行うActionクラス
  *
  */
-public class ReportAction extends ActionBase {
+public class FollowAction extends ActionBase {
 
     private ReportService service;
     private EmployeeService empService;
@@ -267,36 +267,4 @@ public class ReportAction extends ActionBase {
         redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
 
     }
-    /**
-     * フォローした人の日報を表示する
-     * @throws ServletException
-     * @throws IOException
-     */
-    public void followList() throws ServletException, IOException {
-
-        //セッションからログイン中の従業員情報を取得
-        EmployeeView fv = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
-
-      //フォローした人の日報を取得する
-        List<FollowView> follows = folService.getFollowList(fv);
-
-      //全日報データの件数を取得
-        long followsCount = folService.countAll();
-
-        putRequestScope(AttributeConst.REPORTS, follows); //取得した日報データ
-
-        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-        String flush = getSessionScope(AttributeConst.FLUSH);
-        if (flush != null) {
-            putRequestScope(AttributeConst.FLUSH, flush);
-            removeSessionScope(AttributeConst.FLUSH);
-        }
-
-        //一覧画面を表示
-        forward(ForwardConst.FW_REP_INDEX);
-    }
-
-
-
-
 }
